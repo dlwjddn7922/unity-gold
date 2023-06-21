@@ -11,12 +11,14 @@ public class Player : MonoBehaviour
     Animator anim;
     
     
+    
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -27,6 +29,8 @@ public class Player : MonoBehaviour
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
+            
+
         }
 
 
@@ -36,6 +40,7 @@ public class Player : MonoBehaviour
         if(rigid.velocity.x > maxSpeed)//¿À¸¥ÂÊ
         {
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
+            
         }else if(rigid.velocity.x < maxSpeed * (-1)) //¿ÞÂÊ
         {
             rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
