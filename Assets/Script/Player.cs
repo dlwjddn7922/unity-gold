@@ -82,4 +82,29 @@ public class Player : MonoBehaviour
         }
 
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            OnDamaged(collision.transform.position);
+        }
+    }
+    void OnDamaged(Vector2 targetPos)
+    {
+        // 레이어바꾸기
+        gameObject.layer = 9;
+        spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+        //반응
+        int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
+        rigid.AddForce(new Vector2(dirc, 1) * 7, ForceMode2D.Impulse);
+
+        //애니메이션
+        anim.SetTrigger("doDamaged");
+        Invoke("OffDamaged", 2);
+    }
+    void OffDamaged()
+    {
+        gameObject.layer = 8;
+        spriteRenderer.color = new Color(1, 1, 1, 1);
+    }
 }
