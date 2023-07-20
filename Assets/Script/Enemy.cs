@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private List<Sprite> center;
     [SerializeField] private List<Sprite> left;
     [SerializeField] private List<Sprite> right;
+    SpriteRenderer spriteRenderer;
+    CapsuleCollider2D collider;
+    
     enum Direction //애니메이션의 상태값
     {
         Center,
@@ -22,6 +25,8 @@ public class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
 
         GetComponent<SpriteAnimation>().SetSprite(center, 0.2f);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        collider = GetComponent<CapsuleCollider2D>();
         Invoke("Think", 5);
     }
 
@@ -68,5 +73,17 @@ public class Enemy : MonoBehaviour
         float nextThinkTime = Random.Range(2f, 6f);
         Invoke("Think", nextThinkTime);
 
+    }
+    public void OnDamaged()
+    {
+        spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+        spriteRenderer.flipY = true;
+        collider.enabled = false;
+        rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+        Invoke("DeActive", 5);
+    }
+    void DeActive()
+    {
+        gameObject.SetActive(false);
     }
 }

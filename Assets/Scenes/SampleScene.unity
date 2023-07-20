@@ -588,6 +588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 5
   jumpPower: 20
+  enemy1: {fileID: 2083588229}
 --- !u!61 &1590138112
 BoxCollider2D:
   m_ObjectHideFlags: 0

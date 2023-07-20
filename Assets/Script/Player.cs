@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigid;
     Animator anim;
+    [SerializeField] private Enemy enemy1;
+    
     
     
     
@@ -86,8 +88,23 @@ public class Player : MonoBehaviour
     {
         if(collision.gameObject.tag == "Enemy")
         {
-            OnDamaged(collision.transform.position);
+            //Attack
+            if(rigid.velocity.y < 0 && transform.position.y > collision.transform.position.y)
+            {
+                OnAttack(collision.transform);
+            }
+            //Damaged
+            else
+            {
+                OnDamaged(collision.transform.position);
+
+            }
         }
+    }
+    public void OnAttack(Transform enemy)
+    {
+        //enemy1 = enemy.GetComponent<Enemy>();
+        enemy1.OnDamaged();
     }
     void OnDamaged(Vector2 targetPos)
     {
